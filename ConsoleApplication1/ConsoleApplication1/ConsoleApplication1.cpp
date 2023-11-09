@@ -34,13 +34,15 @@ int main()
 还有就是有运行的调试器后，会影响当前代码修改后的编译，所以养成每次关掉调试器的习惯
 */
 
+using namespace std; // 在方法内部使用using namespace  也可以在最上面声明 这样整个方法里面都可以使用这种简写方式访问
 void printfTestUsing1() {
-    using namespace std; // 在方法内部使用using namespace  也可以在最上面声明 这样整个方法里面都可以使用这种简写方式访问
     cout << "printfTestUsing  1!\n" << endl;
 }
 
 void printfTestUsing();
 void printfTestNumberScope();
+void testArray();
+void testStruct();
 int main()
 {
     std::cout << "price:\n";
@@ -87,6 +89,8 @@ int main()
     //}
     //
     printfTestNumberScope();
+    testArray();
+    testStruct();
     return 0;
 }
 
@@ -124,8 +128,13 @@ void printfTestNumberScope() {
     cout << "vAuto3 -> " << vAuto3 << endl; // float
     
 
-    auto vAuto4 = 1e9;
+    auto vAuto4 = 1e37f * 1e2f;
     cout << "vAuto4 -> " << vAuto4 << endl; //   
+    vAuto4 *= 1e2;
+    cout << "vAuto4 -> " << vAuto4 << endl; //  
+
+
+
 
     auto vAuto2 = 1e37f / 9.0f;
     cout << "vAuto -> " << vAuto2 << endl; //   float 
@@ -146,6 +155,10 @@ void printfTestNumberScope() {
 
 
 }
+
+
+
+
 /*
 整数类型：
 
@@ -210,3 +223,109 @@ long double：
 存储大小：通常占用十二个字节或更多
 范围：取决于系统
 精度：通常高于 double*/
+
+
+
+void testArray() {
+    int vIntArr[12];
+    int len;
+    // vIntArr[13]; 编译不通过
+    //std::cout << vIntArr[13] << std::endl;
+    //int vIntArr[len];  声明的长度必须是常量，不可修改的数值
+
+    char cats[10]{ 'i','h','a','v','e','a','c','a','t','\0'};
+    std::cout << "char arr  string - >" << cats << std::endl;
+
+    char dogs[]{ 'i','h','a','v','e','a','d','o','g'};
+    std::cout << "dogs arr  char - >" << dogs << std::endl;//
+
+    char autoDogArr[] = "i have a lot of dogs!!!!"; // 这种声明方式默认末尾跟了一个 \0
+    std::cout << "autoDogArr - >" << autoDogArr << std::endl;//
+
+    std::string  vString = "这是一个字符串的声明"; // 更安全 可以随意改变长度
+    vString += "jjjjjjjj";
+
+}
+
+void testStruct() {
+    struct MyStruct  // 结构体
+    {
+        string name;
+        int age;
+        double price;
+    };
+
+    MyStruct myStruct{ "zhang_san", 18, 99999.22222 };
+    MyStruct none{};
+
+    struct SpecialStruct
+    {
+        string name;
+        int id;
+    };
+
+    SpecialStruct sp01;
+
+    SpecialStruct ssArr[]{
+        {"sp", 1},
+        {"sp", 1}
+    };
+
+    union MyUnion // 共用体，只能有一个属性生效，最后一次赋值会修改其他属性的值
+    {
+        int id_int;
+        double id_double;
+        char id_char;
+    };
+
+    MyUnion myunion;
+    myunion.id_char = 'j';
+    myunion.id_int = 'j';
+    myunion.id_double = 55.5;
+
+    cout << "myunion >" << myunion.id_char << endl; // 空字符
+    cout << "myunion >" << myunion.id_int << endl;  // 0
+    cout << "myunion >" << myunion.id_double << endl; // 55.5
+    union MyUnion02 {
+        long id_long;
+        int id_int;
+        float id_float;
+    };
+
+    struct MyStruct02 {
+        int price; 
+        
+        union {
+            long id_long;
+            int id_int;
+            float id_float; // 不能填string类型，应该是转换问题
+        };
+
+    };
+    MyStruct02 myStruct03;
+
+
+    enum MyEnum {RED = 3,ORONGE,BLUE,GREEN,WHITE = 9,BLACK,PEEK}; // 定义枚举 
+
+    MyEnum myEnum;
+    myEnum = RED;
+    int red = MyEnum::RED;
+    myEnum = MyEnum(red); // 需要枚举强制转换 int类型
+
+    cout << "&myEnum === >" << &myEnum << endl;
+
+
+    double aChar = 10000.0;
+    cout << "&aChar === >" << &aChar << endl;
+    cout << "&bChar - &aChar === >" << int(long(&aChar) - long(&myEnum)) << endl;  // 8 字节？？  相减为8
+
+    double bChar = 1000.0;
+
+    cout << "&bChar === >" << &bChar << endl;
+    cout << "&bChar - &aChar === >" << int (&bChar - &aChar) << endl;  // double 4字节  int 8 字节？？  神奇
+
+    double *varAddress = &bChar;  //note: 必须以对应的类型来声明 *varAddress的类型，因为*varAddress指的是 double类型的值  varAddress指的是一个变量的引用
+
+    cout << "*varAddress " << *varAddress << endl; // 值
+    cout << "varAddress " << varAddress << endl; // 地址
+}
