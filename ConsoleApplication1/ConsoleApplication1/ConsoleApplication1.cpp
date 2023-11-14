@@ -26,6 +26,8 @@ int、 unsigned int long、 unsigned long、 long long或unsigned long long。�
 */
 
 #include <iostream>
+#include <array>
+#include <vector>
 /*
 int main()
 {
@@ -43,6 +45,9 @@ void printfTestUsing();
 void printfTestNumberScope();
 void testArray();
 void testStruct();
+void testPointer();
+void testPointerToStruct();
+void testInputString();
 int main()
 {
     std::cout << "price:\n";
@@ -91,6 +96,8 @@ int main()
     printfTestNumberScope();
     testArray();
     testStruct();
+    testPointer();
+    testPointerToStruct();
     return 0;
 }
 
@@ -227,8 +234,7 @@ long double：
 
 
 void testArray() {
-    int vIntArr[12];
-    int len;
+    
     // vIntArr[13]; 编译不通过
     //std::cout << vIntArr[13] << std::endl;
     //int vIntArr[len];  声明的长度必须是常量，不可修改的数值
@@ -261,7 +267,7 @@ void testStruct() {
     struct SpecialStruct
     {
         string name;
-        int id;
+        int sssss;
     };
 
     SpecialStruct sp01;
@@ -328,4 +334,147 @@ void testStruct() {
 
     cout << "*varAddress " << *varAddress << endl; // 值
     cout << "varAddress " << varAddress << endl; // 地址
+}
+
+//用于测试指针
+void testPointer() {
+    // note : 在cout和多数C++表达式中，char数组名、char指针以及用引号括起的字符串常量都被解释为字符串第一个字符的地址。
+
+
+    double vDouble = 2.0;
+    double* pDouble = &vDouble;
+    vDouble = NULL;
+    //delete pDouble; //内存有东西不能释放   不是new分配的内存不能释放
+    int* pSome = new int[1000]; // 创建数组的地址
+    pSome[0] = 1;
+    pSome[1] = 2;
+    pSome[2] = 3;
+    pSome[3] = 4;
+    cout << "pSome[0]" << pSome[0] << endl;// 1
+    cout << "*pSome" << *pSome << endl;  // 1 表示的也是第一个元素，这是和声明数组的变量是不同的地方
+    pSome++;  // 这里是指针地址向前移动一个地址
+    cout << "pSome++ *pSome" << *pSome << endl;  // 2 表示的也是第一个元素，这是和声明数组的变量是不同的地方
+    cout << "pSome++ pSome[0]" << pSome[0] << endl;  // 2 表示的也是第一个元素，这是和声明数组的变量是不同的地方
+    pSome--; // ！！ 需要还原指针才能删除
+    delete [] pSome;
+
+    int arrInt[]{ 1,2,3,4,5,6 };
+    // int* pArrInt = &arrInt; // FIAL  数组类型好像变量自身就是一个地址。。。。。
+    int* pArrInt = arrInt;
+    cout << "arrInt[0]" << arrInt[0] << endl;
+
+    // 下面三个都表示数组元素第一个元素的地址
+    cout << "arrInt -- >" << arrInt << endl;
+    cout << "pArrInt -- >" << pArrInt << endl;
+    cout << "pArrInt -- >" << &arrInt[0] << endl;
+    cout << "&arrInt -- >" << &arrInt << endl; // 地址和第一个元素的地址一致，但是 &arrInt ++ 是加了一个arrInt内存长度的数量级 即 int * 6 = 4 * 6  int 四字节 
+    
+    // 这样就可以赋值arrInt数组的地址
+    int (*pArrAYInt)[6] = &arrInt; 
+
+    cout << "sizeOf(arrInt) -- >" << sizeof(arrInt) << endl;  // 计算了整个数组的空间占用  24
+    cout << "sizeOf(pArrInt) -- >" << sizeof(pArrInt) << endl; // 8 计算的是地址的空间占用 （指针的长度）
+
+    const char *pString = "iamstring"; // 字符串字面值是常量，这就是为什么代码在声明中使用关键字const的原因。
+    char* pChar;
+    char vString[20] = "youarestring";
+    pChar = vString;
+
+    cout << "pChar --- > " << pChar << endl; // 传入的是地址而不是字符串的值，"pChar --- > " 这个也是转换成常量地址传入进去的
+    cout << "vString --- > " << vString << endl;
+    cout << "pString --- > " << pString << endl;
+    cout << "(char *)pString --- > " << (char *)pString << endl; // 还是字符串
+    cout << "(int *)pString --- > " << (int *)pString << endl;  // 打印出来是地址了, 运行时传入的是地址了，所以打印了地址
+
+    auto ssss = (int*)pString;
+
+    /*
+    * 
+    for (size_t i = 0; i < INT64_MAX; i++)  // 由于没有删除指针 会造成内存一直存在，没有被重复使用，内存持续升高
+    {
+        delete []pSome;
+        pSome = new int[i]; // 这样就可以动态创建数组的内存占用对应的地址
+        cout << "pSome address : " << pSome << endl;
+    }
+
+    //testInputString();
+    int* vInt = new int;
+    for (size_t i = 0; i < INT64_MAX; i++)  // 由于没有删除指针 会造成内存一直存在，没有被重复使用，内存持续升高
+    {
+        delete vInt; // 删除再重新分配内存就不会出现该问题了
+        vInt = new int;
+        cout << "vInt address : " << vInt << endl;
+    }
+
+    delete vInt;
+    */
+
+}
+
+
+void testArray() {
+    vector <int> intVect(10);
+    array <double, 10> doubleArr{};
+    double dArr[10] = {};
+}
+
+
+void testPointerToStruct() {
+
+    struct PointerStruct {
+        int id;
+        int byteCount;
+    };
+
+    PointerStruct ps{ 1,100 };
+    PointerStruct* pps = &ps;
+
+    cout << "ps.id  = " << ps.id << endl;
+    cout << "pps->id  = " << pps -> id << endl; // 地址访问成员的方式方法
+    cout << "pps->id  = " << (*pps).id << endl; // 地址访问成员的方式方法
+
+    PointerStruct ps0;
+    PointerStruct ps1;
+    PointerStruct* psArr[] = { &ps0, &ps1 };  // psArr 是一个指针数组
+
+    // psArr 指向的是数组第一个元素的地址， 然后数组第一元素是一个结构的地址， 因此 psArrP是结构地址的指针 （指针和地址一个意思）
+    PointerStruct** psArrP = psArr;  
+    //PointerStruct(*psArrP01)[] = &psArr;  fail 因为psArr不是一个声明变量 而是一个地址数组
+    //PointerStruct*** ppps = psArrP;
+
+    cout << "*psArr  psArr[0]->id" << psArr[0]->id << endl;
+    auto ss = psArrP;
+    cout << "PointerStruct** psArrP ： " << psArrP << endl; // 数组第一个指针的指针  打印出来是一个地址
+    cout << "PointerStruct** psArrP  (* psArrP)->id  ：" << (* psArrP)->id << endl;
+
+}
+
+void testInputString() {
+    char* charArr[1000];
+    int i = 0, charLen = 0;
+    const int maxLineLength = 80;
+    while (true)
+    {
+        char* charTemp = new char[maxLineLength];
+        cin.getline(charTemp, maxLineLength);
+        size_t charLen = strlen(charTemp) + 1;
+        charArr[i] = new char[charLen];
+        //strcpy(charArr[i], charTemp);
+        strcpy_s(charArr[i], charLen, charTemp);
+
+        delete [] charTemp;
+        int count = i;
+        while (count >= 0)
+        {
+            cout << "第" << count << "行：" << charArr[count] << endl;
+            count--;
+        }
+        if (strcmp(charArr[i], "exit") == 0) {
+            for (int j = 0; j <= i; j++) {
+                delete[] charArr[j];
+            }
+            break;
+        }
+        i++;
+    }
 }
