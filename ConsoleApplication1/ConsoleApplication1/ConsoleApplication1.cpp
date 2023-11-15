@@ -26,6 +26,7 @@ int、 unsigned int long、 unsigned long、 long long或unsigned long long。�
 */
 
 #include <iostream>
+#include <fstream>
 #include <array>
 #include <vector>
 
@@ -53,6 +54,8 @@ void testPointerToStruct();
 void testInputString();
 void testArray02();
 void testCodeExucuteEvn();
+void testWriteFile();
+void testReadFile();
 int main()
 {
 	std::cout << "price:\n";
@@ -104,6 +107,8 @@ int main()
 	testPointer();
 	testPointerToStruct();
 	testArray02();
+	//testWriteFile();
+	testReadFile();
 	testCodeExucuteEvn();
 	return 0;
 }
@@ -564,6 +569,94 @@ void testPointerToStruct() {
 	cout << "PointerStruct** psArrP  (* psArrP)->id  ：" << (*psArrP)->id << endl;
 
 }
+
+void testWriteFile() {
+	char mobile[50];
+	int year;
+	double price;
+	 
+	ofstream osf;
+	osf.open("info.txt");
+
+	cout << "请输入手机号:" << endl;
+	cin.getline(mobile, 50);
+	cout << "请输入年龄:" << endl;
+	cin >> year;
+	cout << "请输入价格:" << endl;
+	cin >> price;
+
+	cout << "请输入手机号:" << mobile << endl;
+	cout << "请输入年龄:" << year << endl;
+	cout << "请输入价格:" << price << endl;
+	/*
+	osf << "----------------------这是代码生成的文件----------------------" << endl;
+	osf << "请输入手机号:" << mobile << endl;
+	osf << "请输入年龄:" << year << endl;
+	osf << "请输入价格:" << price << endl;
+	*/
+	osf << year << endl;
+	cout << "请输入年龄:" << endl;
+	cin >> year;
+	osf << year << endl;
+
+	cout << "请输入年龄:" << endl;
+	cin >> year;
+	osf << year << endl;
+
+	cout << "请输入年龄:" << endl;
+	cin >> year;
+	osf << year << endl;
+	osf.close();
+}
+
+void testReadFile() {
+	ifstream ifs;
+	ifs.open("info.txt");
+	if (! ifs.is_open()) {
+		exit(EXIT_FAILURE);
+	}
+	int value;
+	int sum = 0;
+	ifs >> value;
+	while (ifs.good()) { // ifs.is_open 不好使 ， good查看读取操作是否成功
+		sum += value;
+		ifs >> value;
+	}
+
+	if (ifs.eof()) {
+
+		cout << "read file over!!!" << endl;
+	}
+	else if (ifs.fail()) {
+
+		cout << "read file fail!!!" << endl;
+	}
+	else {
+		cout << "read file other error code!!!" << endl;
+	}
+	cout << "calculate addtion result : " << sum << endl;
+	ifs.close();
+}
+
+
+int testArrFunc(int arr[], int n) {
+	int count = 0;
+	for (int i = 0; i < n; i++)
+	{
+		count += arr[i];
+	}
+	return count;
+}
+
+int testArrFunc(int* arr, int n) {
+	int count = 0;
+	for (int i = 0; i < n; i++)
+	{
+		count += arr[i];
+	}
+	return count;
+}
+
 
 void testInputString() {
 	char* charArr[1000];
