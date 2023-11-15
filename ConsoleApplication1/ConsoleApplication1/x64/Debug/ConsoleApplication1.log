@@ -1,10 +1,9 @@
 ﻿  ConsoleApplication1.cpp
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(124,18): warning C4305: “初始化”: 从“double”到“float”截断
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(136,25): warning C4056: 浮点常量算术溢出
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(324,48): warning C4311: “<function-style-cast>”: 从“double *”到“long”的指针截断
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(324,48): warning C4302: “<function-style-cast>”: 从“double *”到“long”截断
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(324,63): warning C4311: “<function-style-cast>”: 从“testStruct::MyEnum *”到“long”的指针截断
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(324,63): warning C4302: “<function-style-cast>”: 从“testStruct::MyEnum *”到“long”截断
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(309,16): warning C4101: “myStruct03”: 未引用的局部变量
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(451,36): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(133,15): warning C4305: “初始化”: 从“double”到“float”截断
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(145,22): warning C4056: 浮点常量算术溢出
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(333,45): warning C4311: “<function-style-cast>”: 从“double *”到“long”的指针截断
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(333,45): warning C4302: “<function-style-cast>”: 从“double *”到“long”截断
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(333,60): warning C4311: “<function-style-cast>”: 从“testStruct::MyEnum *”到“long”的指针截断
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(333,60): warning C4302: “<function-style-cast>”: 从“testStruct::MyEnum *”到“long”截断
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(318,13): warning C4101: “myStruct03”: 未引用的局部变量
   ConsoleApplication1.vcxproj -> D:\cpp_work\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe
