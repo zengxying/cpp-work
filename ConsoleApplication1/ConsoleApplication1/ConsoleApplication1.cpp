@@ -56,6 +56,9 @@ void testArray02();
 void testCodeExucuteEvn();
 void testWriteFile();
 void testReadFile();
+void test_2dimensional_array_params2(int(*arr)[4], int size);
+void test_2dimensional_array_params(int arr[][4], int size);
+void testFuncConstParams(const int arr[], int size);
 int main()
 {
 	std::cout << "price:\n";
@@ -110,6 +113,8 @@ int main()
 	//testWriteFile();
 	testReadFile();
 	testCodeExucuteEvn();
+	int i_arr[]{ 1,2,3 };
+	testFuncConstParams(i_arr, 0);
 	return 0;
 }
 
@@ -423,6 +428,54 @@ void testPointer() {
 
 }
 
+void testFuncConstParams(const int arr[], int size) {
+	// const 修饰表示了只读不可更改其数据
+	// arr[0] += 10; // 使用 const修饰的参数，使用的是常量地址，不能修改其值，这个和其他java 或者 ts语言就不一样了，
+	const int count = 0;
+	// int* cp = &count; // invalid  需要常量的指针声明才能有效
+	const int* cp = &count;
+	const int* cpp = cp; // 所以 const int* 代表的是一种类型， cp === cpp 是相等的
+
+	int test_value = 1;
+	int* tvp = &test_value;
+	const int* tvpp = tvp;
+
+	int tv = 100;
+
+	int *tf = &tv;
+	int** tvppp = &tf;
+	cout << "1*tvppp -- >" << *tvppp << endl;
+	cout << "1**tvppp -- >" << **tvppp << endl;
+	cout << "1tvppp -- >" << tvppp << endl;
+	*tvppp = &tv;
+	cout << "2*tvppp -- >" << *tvppp << endl;
+	cout << "2**tvppp -- >" << **tvppp << endl;
+	cout << "2tvppp -- >" << tvppp << endl;
+
+	const int* t_ppp = &tv;
+	t_ppp = &test_value; // 可以改变指针指向
+	//*t_ppp = 5;//invalid 无效代码 不能修改指针指向的值
+
+	int* const tc_ppp = &tv;
+	*tc_ppp = 5;  // 可以修改指针指向的值
+	// tc_ppp = &test_value; //invalid 无效代码 
+
+	const int* const cc_tc_ppp = &tv;
+	//*cc_tc_ppp = 5;//invalid 无效代码 
+	//cc_tc_ppp = &test_value;//invalid 无效代码 
+}
+
+
+int testFuncArrStartPointerToEndPointer(int* start, int* end) {
+	int total = 0;
+	int* pointer = start;
+	for (; pointer != end; pointer++)
+	{
+		total += *pointer;
+	}
+	return total;
+}
+
 void testCodeExucuteEvn() {
 
 	int test0 = 100;
@@ -574,7 +627,7 @@ void testWriteFile() {
 	char mobile[50];
 	int year;
 	double price;
-	 
+
 	ofstream osf;
 	osf.open("info.txt");
 
@@ -612,7 +665,7 @@ void testWriteFile() {
 void testReadFile() {
 	ifstream ifs;
 	ifs.open("info.txt");
-	if (! ifs.is_open()) {
+	if (!ifs.is_open()) {
 		exit(EXIT_FAILURE);
 	}
 	int value;
@@ -638,6 +691,18 @@ void testReadFile() {
 	ifs.close();
 }
 
+// 只能接受二维数组 列数为4的数组 参数是地址 比如  int arr[2][4]   int arr[200][4]
+void test_2dimensional_array_params2(int(*arr)[4], int size)
+{
+}
+// 只能接受二维数组 列数为4的数组 参数是变量名
+void test_2dimensional_array_params(int arr[][4], int size)
+{
+	int arrTest[2][4]{};
+	test_2dimensional_array_params(arrTest, 1);
+	test_2dimensional_array_params2(arrTest, 1);
+}
+
 
 int testArrFunc(int arr[], int n) {
 	int count = 0;
@@ -648,7 +713,7 @@ int testArrFunc(int arr[], int n) {
 	return count;
 }
 
-int testArrFunc(int* arr, int n) {
+int testArrFunc1(int* arr, int n) {
 	int count = 0;
 	for (int i = 0; i < n; i++)
 	{
