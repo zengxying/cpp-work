@@ -29,6 +29,7 @@ int、 unsigned int long、 unsigned long、 long long或unsigned long long。�
 #include <fstream>
 #include <array>
 #include <vector>
+#include <cmath>
 
 typedef char* pchar;
 typedef clock_t int_c_t, ck_t; // 类型别名
@@ -59,6 +60,17 @@ void testReadFile();
 void test_2dimensional_array_params2(int(*arr)[4], int size);
 void test_2dimensional_array_params(int arr[][4], int size);
 void testFuncConstParams(const int arr[], int size);
+void testFuncParamsToFunc(int (*func)(int*, int*));
+void testReferenceValue();
+int testFuncArrStartPointerToEndPointer(int* start, int* end);
+
+/// <summary>
+/// 内联函数， 计算一个数的平方
+/// </summary>
+/// <param name="a"></param>
+/// <returns></returns>
+inline int customePower(int a) { return a * a; };
+
 int main()
 {
 	std::cout << "price:\n";
@@ -115,6 +127,8 @@ int main()
 	testCodeExucuteEvn();
 	int i_arr[]{ 1,2,3 };
 	testFuncConstParams(i_arr, 0);
+	cout << "inline pow = " << customePower(12) << endl;
+	testReferenceValue();
 	return 0;
 }
 
@@ -442,7 +456,7 @@ void testFuncConstParams(const int arr[], int size) {
 
 	int tv = 100;
 
-	int *tf = &tv;
+	int* tf = &tv;
 	int** tvppp = &tf;
 	cout << "1*tvppp -- >" << *tvppp << endl;
 	cout << "1**tvppp -- >" << **tvppp << endl;
@@ -465,7 +479,85 @@ void testFuncConstParams(const int arr[], int size) {
 	//cc_tc_ppp = &test_value;//invalid 无效代码 
 }
 
+struct FuncStruct
+{
+	int  id;
+	double time;
+	double price;
+};
 
+void testFuncParamsToStruct00(const FuncStruct* funcStruct, FuncStruct* outfs) 
+{
+
+	funcStruct->id;
+	outfs->price = rand();
+
+
+}
+
+// const 修饰引用类型的结构数据
+void testFuncParamsToStructReference(const FuncStruct& funcStruct, FuncStruct& outfs) {
+	// funcStruct.id = 50; // invalid 不能通过，不能修改const修饰的引用类型数据
+	outfs.id = funcStruct.id + 1;
+
+}
+// const 修饰引用类型的结构数据
+FuncStruct& testFuncParamsToStructReference01(const FuncStruct& funcStruct, FuncStruct& outfs) {
+	// funcStruct.id = 50; // invalid 不能通过，不能修改const修饰的引用类型数据
+	outfs.id = funcStruct.id + 1;
+	FuncStruct fs01;
+	//TODO 
+	return fs01;
+}
+
+void testFuncParamsToStruct01(const FuncStruct funcStruct, FuncStruct outfs) // 克隆了一份传入的参数的数据到 funcStruct中，会增加一定的时间和空间成本
+{
+
+	testFuncParamsToFunc(testFuncArrStartPointerToEndPointer); // 传入函数指针
+}
+
+// 将参数设置为函数指针类型
+void testFuncParamsToFunc(int (*func)(int*, int*)) 
+{
+	int id = 0;
+	int id01 = 0;
+	func(&id, &id01);
+	(*func)(&id, &id01); // 两种方式的指针函数调用都是允许的
+}
+
+
+void testReferenceValue() {
+	int iValue = 50;
+	int& irValue = iValue; // 和别名的感觉是一致的，相当于值ivalue的一个别名，指向是一致的，包括指针和地址
+	int randValue = 101;
+	irValue = randValue;
+	cout << "irValue : " << irValue << endl;
+	cout << "randValue:" << randValue << endl;
+	cout << "iValue:" << iValue << endl;
+	cout << "&irValue:" << &irValue << endl;
+	cout << "&randValue:" << &randValue << endl;
+	cout << "&iValue:" << &iValue << endl;
+
+	int* addressValue = &iValue;
+	int& irValue01 = *addressValue;
+	addressValue = &randValue;
+
+	// irValue的地址始终保持和iValue的地址保持一致
+	cout << "irValue : " << irValue << endl;
+	cout << "*addressValue:" << *addressValue << endl;
+	cout << "addressValue:" << addressValue << endl;
+	cout << "&irValue01:" << &irValue01 << endl;
+	cout << "irValue01:" << irValue01 << endl;
+}
+
+
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="start"></param>
+/// <param name="end"></param>
+/// <returns></returns>
 int testFuncArrStartPointerToEndPointer(int* start, int* end) {
 	int total = 0;
 	int* pointer = start;
@@ -474,6 +566,20 @@ int testFuncArrStartPointerToEndPointer(int* start, int* end) {
 		total += *pointer;
 	}
 	return total;
+}
+
+/// <summary>
+///  定义复杂的函数类型
+/// </summary>
+typedef const int* (*funcType)(int*, int*); // 定义类型别名
+int* testFuncArrStartPointerToEndPointer01(int* start, int* end) {
+	int total = 0;
+	int* pointer = start;
+	for (; pointer != end; pointer++)
+	{
+		total += *pointer;
+	}
+	return &total;
 }
 
 void testCodeExucuteEvn() {
