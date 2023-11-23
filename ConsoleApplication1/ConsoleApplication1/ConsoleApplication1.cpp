@@ -30,6 +30,8 @@ int、 unsigned int long、 unsigned long、 long long或unsigned long long。�
 #include <array>
 #include <vector>
 #include <cmath>
+#include "CustomCommon.h"
+#include "FunctionUseWay.h"
 
 typedef char* pchar;
 typedef clock_t int_c_t, ck_t; // 类型别名
@@ -46,6 +48,8 @@ void printfTestUsing1() {
 	cout << "printfTestUsing  1!\n" << endl;
 }
 
+
+
 void printfTestUsing();
 void printfTestNumberScope();
 void testArray();
@@ -57,19 +61,8 @@ void testArray02();
 void testCodeExucuteEvn();
 void testWriteFile();
 void testReadFile();
-void test_2dimensional_array_params2(int(*arr)[4], int size);
-void test_2dimensional_array_params(int arr[][4], int size);
-void testFuncConstParams(const int arr[], int size);
-void testFuncParamsToFunc(int (*func)(int*, int*));
-void testReferenceValue();
-int testFuncArrStartPointerToEndPointer(int* start, int* end);
 
-/// <summary>
-/// 内联函数， 计算一个数的平方
-/// </summary>
-/// <param name="a"></param>
-/// <returns></returns>
-inline int customePower(int a) { return a * a; };
+void testReferenceValue();
 
 int main()
 {
@@ -125,12 +118,25 @@ int main()
 	//testWriteFile();
 	testReadFile();
 	testCodeExucuteEvn();
-	int i_arr[]{ 1,2,3 };
-	testFuncConstParams(i_arr, 0);
-	cout << "inline pow = " << customePower(12) << endl;
 	testReferenceValue();
+	excuteFunctionUseWayMain();
 	return 0;
 }
+
+
+
+const double PI = 3.14159265358979323846;
+float wrapPi(float theta) {
+	if (fabs(theta) <= PI){
+		float TWOPPI = 2.0f * PI;
+		float revolutions = floor((theta + PI) * (1.0f / TWOPPI));
+		theta -= revolutions * TWOPPI;
+	}
+	return theta;
+}
+
+
+
 
 void printfTestUsing() {
 	std::cout << "printfTestUsing!\n" << std::endl;
@@ -138,7 +144,7 @@ void printfTestUsing() {
 
 
 void printfTestNumberScope() {
-	using namespace std;
+
 
 	cout.setf(ios_base::fixed, ios_base::floatfield);
 	char vChar = 'M';
@@ -442,89 +448,6 @@ void testPointer() {
 
 }
 
-void testFuncConstParams(const int arr[], int size) {
-	// const 修饰表示了只读不可更改其数据
-	// arr[0] += 10; // 使用 const修饰的参数，使用的是常量地址，不能修改其值，这个和其他java 或者 ts语言就不一样了，
-	const int count = 0;
-	// int* cp = &count; // invalid  需要常量的指针声明才能有效
-	const int* cp = &count;
-	const int* cpp = cp; // 所以 const int* 代表的是一种类型， cp === cpp 是相等的
-
-	int test_value = 1;
-	int* tvp = &test_value;
-	const int* tvpp = tvp;
-
-	int tv = 100;
-
-	int* tf = &tv;
-	int** tvppp = &tf;
-	cout << "1*tvppp -- >" << *tvppp << endl;
-	cout << "1**tvppp -- >" << **tvppp << endl;
-	cout << "1tvppp -- >" << tvppp << endl;
-	*tvppp = &tv;
-	cout << "2*tvppp -- >" << *tvppp << endl;
-	cout << "2**tvppp -- >" << **tvppp << endl;
-	cout << "2tvppp -- >" << tvppp << endl;
-
-	const int* t_ppp = &tv;
-	t_ppp = &test_value; // 可以改变指针指向
-	//*t_ppp = 5;//invalid 无效代码 不能修改指针指向的值
-
-	int* const tc_ppp = &tv;
-	*tc_ppp = 5;  // 可以修改指针指向的值
-	// tc_ppp = &test_value; //invalid 无效代码 
-
-	const int* const cc_tc_ppp = &tv;
-	//*cc_tc_ppp = 5;//invalid 无效代码 
-	//cc_tc_ppp = &test_value;//invalid 无效代码 
-}
-
-struct FuncStruct
-{
-	int  id;
-	double time;
-	double price;
-};
-
-void testFuncParamsToStruct00(const FuncStruct* funcStruct, FuncStruct* outfs) 
-{
-
-	funcStruct->id;
-	outfs->price = rand();
-
-
-}
-
-// const 修饰引用类型的结构数据
-void testFuncParamsToStructReference(const FuncStruct& funcStruct, FuncStruct& outfs) {
-	// funcStruct.id = 50; // invalid 不能通过，不能修改const修饰的引用类型数据
-	outfs.id = funcStruct.id + 1;
-
-}
-// const 修饰引用类型的结构数据
-FuncStruct& testFuncParamsToStructReference01(const FuncStruct& funcStruct, FuncStruct& outfs) {
-	// funcStruct.id = 50; // invalid 不能通过，不能修改const修饰的引用类型数据
-	outfs.id = funcStruct.id + 1;
-	FuncStruct fs01;
-	//TODO 
-	return fs01;
-}
-
-void testFuncParamsToStruct01(const FuncStruct funcStruct, FuncStruct outfs) // 克隆了一份传入的参数的数据到 funcStruct中，会增加一定的时间和空间成本
-{
-
-	testFuncParamsToFunc(testFuncArrStartPointerToEndPointer); // 传入函数指针
-}
-
-// 将参数设置为函数指针类型
-void testFuncParamsToFunc(int (*func)(int*, int*)) 
-{
-	int id = 0;
-	int id01 = 0;
-	func(&id, &id01);
-	(*func)(&id, &id01); // 两种方式的指针函数调用都是允许的
-}
-
 
 void testReferenceValue() {
 	int iValue = 50;
@@ -551,36 +474,6 @@ void testReferenceValue() {
 }
 
 
-
-/// <summary>
-/// 
-/// </summary>
-/// <param name="start"></param>
-/// <param name="end"></param>
-/// <returns></returns>
-int testFuncArrStartPointerToEndPointer(int* start, int* end) {
-	int total = 0;
-	int* pointer = start;
-	for (; pointer != end; pointer++)
-	{
-		total += *pointer;
-	}
-	return total;
-}
-
-/// <summary>
-///  定义复杂的函数类型
-/// </summary>
-typedef const int* (*funcType)(int*, int*); // 定义类型别名
-int* testFuncArrStartPointerToEndPointer01(int* start, int* end) {
-	int total = 0;
-	int* pointer = start;
-	for (; pointer != end; pointer++)
-	{
-		total += *pointer;
-	}
-	return &total;
-}
 
 void testCodeExucuteEvn() {
 
@@ -795,37 +688,6 @@ void testReadFile() {
 	}
 	cout << "calculate addtion result : " << sum << endl;
 	ifs.close();
-}
-
-// 只能接受二维数组 列数为4的数组 参数是地址 比如  int arr[2][4]   int arr[200][4]
-void test_2dimensional_array_params2(int(*arr)[4], int size)
-{
-}
-// 只能接受二维数组 列数为4的数组 参数是变量名
-void test_2dimensional_array_params(int arr[][4], int size)
-{
-	int arrTest[2][4]{};
-	test_2dimensional_array_params(arrTest, 1);
-	test_2dimensional_array_params2(arrTest, 1);
-}
-
-
-int testArrFunc(int arr[], int n) {
-	int count = 0;
-	for (int i = 0; i < n; i++)
-	{
-		count += arr[i];
-	}
-	return count;
-}
-
-int testArrFunc1(int* arr, int n) {
-	int count = 0;
-	for (int i = 0; i < n; i++)
-	{
-		count += arr[i];
-	}
-	return count;
 }
 
 
