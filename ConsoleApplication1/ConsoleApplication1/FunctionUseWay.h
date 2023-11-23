@@ -1,4 +1,5 @@
-
+#ifndef CPP_H_FunctionUseWay
+#define CPP_H_FunctionUseWay
 #include "CustomCommon.h"
 /*  如果这些方法没有在外部使用可以不在头文件里面声明
 FuncStruct& clone(FuncStruct source);
@@ -19,5 +20,8 @@ void testFuncParamsToFunc(int (*func)(int*, int*));
 int testFuncArrStartPointerToEndPointer(int* start, int* end);
 int calculateNumPower(int value, int power = 2); // 可以添加默认参数的值 这个和ts很像
 */
+template <typename AnyType>
+AnyType& change(AnyType& source01, AnyType& source02);
 void excuteFunctionUseWayMain();
 
+#endif

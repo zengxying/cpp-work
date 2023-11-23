@@ -32,6 +32,7 @@ int、 unsigned int long、 unsigned long、 long long或unsigned long long。�
 #include <cmath>
 #include "CustomCommon.h"
 #include "FunctionUseWay.h"
+#include "VariableScope.h"
 
 typedef char* pchar;
 typedef clock_t int_c_t, ck_t; // 类型别名
@@ -49,7 +50,8 @@ void printfTestUsing1() {
 }
 
 
-
+//int var_int_pi = 500; // 编译报错，已经有源文件声明了 外联静态变量
+//static int var_int_pi = 500; // static 将覆盖外联的静态变量 在该文件内使用static 声明的变量
 void printfTestUsing();
 void printfTestNumberScope();
 void testArray();
@@ -119,7 +121,20 @@ int main()
 	testReadFile();
 	testCodeExucuteEvn();
 	testReferenceValue();
+	double test01 = 100l;
+	double test02 = 1002;
+	//change(test01, test02);
+	cout << "test01 , test02 == >" << test01 << " ," << test02 << endl;
 	excuteFunctionUseWayMain();
+	excuteVariableScope();
+
+	extern int var_int_pi; // 使用了其他文件的外联的静态变量
+	cout << "excuteVariableScope  extern int var_int_pi --> " << var_int_pi << endl; // 3
+	int var_int_pi;  // 使用了其他文件的外联的静态变量
+	cout << "excuteVariableScope  int var_int_pi --> " << var_int_pi << endl; // 3
+	while (++ var_int_pi < 10) { // 修改外联静态变量的值， 和别名以及引用类似的操作
+		excuteVariableScope();
+	}
 	return 0;
 }
 
@@ -127,7 +142,7 @@ int main()
 
 const double PI = 3.14159265358979323846;
 float wrapPi(float theta) {
-	if (fabs(theta) <= PI){
+	if (fabs(theta) <= PI) {
 		float TWOPPI = 2.0f * PI;
 		float revolutions = floor((theta + PI) * (1.0f / TWOPPI));
 		theta -= revolutions * TWOPPI;
@@ -279,15 +294,18 @@ void testArray() {
 	char cats[10]{ 'i','h','a','v','e','a','c','a','t','\0' };
 	std::cout << "char arr  string - >" << cats << std::endl;
 
-	char dogs[]{ 'i','h','a','v','e','a','d','o','g' };
+	char dogs[10]{ 'i','h','a','v','e','a','d','o','g' };
 	std::cout << "dogs arr  char - >" << dogs << std::endl;//
 
 	char autoDogArr[] = "i have a lot of dogs!!!!"; // 这种声明方式默认末尾跟了一个 \0
 	std::cout << "autoDogArr - >" << autoDogArr << std::endl;//
 
 	std::string  vString = "这是一个字符串的声明"; // 更安全 可以随意改变长度
-	vString += "jjjjjjjj";
+	vString += "jjjjjjjj";	
 
+	int tempIntArr01[10]{ 1,2,3,4,5,6,7,8,9,0 };
+	int tempIntArr02[10]{ 1,2,3,4,5,6,7,8,9,10 };
+	//tempIntArr01 = tempIntArr02;// 表达必须是可修改的左值
 }
 
 void testStruct() {

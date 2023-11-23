@@ -1,5 +1,6 @@
 #include <iostream>
 #include "CustomCommon.h"
+#include "FunctionUseWay.h"
 using namespace std;
 
 void testFuncConstParams(const int arr[], int size) {
@@ -187,7 +188,7 @@ int calculateNumPower(int value, int power = 2) {
 }
 
 template <typename AnyType> // 函数模板，用于参数的自动分配类型，可以传入多类型的参数提供同一种逻辑
-
+ // 放到头文件里面不太行!!!!
 AnyType& change(AnyType& source01, AnyType& source02)
 {
 	AnyType temp = source01;

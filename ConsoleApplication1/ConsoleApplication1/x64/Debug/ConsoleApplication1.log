@@ -1,13 +1,16 @@
 ﻿  ConsoleApplication1.cpp
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(131,16): warning C4305: “初始化”: 从“double”到“float”截断
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(132,21): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(163,15): warning C4305: “初始化”: 从“double”到“float”截断
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(175,22): warning C4056: 浮点常量算术溢出
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(363,45): warning C4311: “<function-style-cast>”: 从“double *”到“long”的指针截断
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(363,45): warning C4302: “<function-style-cast>”: 从“double *”到“long”截断
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(363,60): warning C4311: “<function-style-cast>”: 从“testStruct::MyEnum *”到“long”的指针截断
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(363,60): warning C4302: “<function-style-cast>”: 从“testStruct::MyEnum *”到“long”截断
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(348,13): warning C4101: “myStruct03”: 未引用的局部变量
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(532,19): warning C4305: “初始化”: 从“int”到“char”截断
-D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(532,21): warning C4309: “初始化”: 截断常量值
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(146,16): warning C4305: “初始化”: 从“double”到“float”截断
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(147,21): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(178,15): warning C4305: “初始化”: 从“double”到“float”截断
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(190,22): warning C4056: 浮点常量算术溢出
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(381,45): warning C4311: “<function-style-cast>”: 从“double *”到“long”的指针截断
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(381,45): warning C4302: “<function-style-cast>”: 从“double *”到“long”截断
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(381,60): warning C4311: “<function-style-cast>”: 从“testStruct::MyEnum *”到“long”的指针截断
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(381,60): warning C4302: “<function-style-cast>”: 从“testStruct::MyEnum *”到“long”截断
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(366,13): warning C4101: “myStruct03”: 未引用的局部变量
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(550,19): warning C4305: “初始化”: 从“int”到“char”截断
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(550,21): warning C4309: “初始化”: 截断常量值
+  VariableScope.cpp
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\VariableScope.cpp(2,21): warning C4305: “初始化”: 从“double”到“float”截断
+  正在生成代码...
   ConsoleApplication1.vcxproj -> D:\cpp_work\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe
