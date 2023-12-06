@@ -3,6 +3,11 @@
 #include "FunctionUseWay.h"
 using namespace std;
 
+/// <summary>
+///  定义复杂的函数类型
+/// </summary>
+typedef const int* (*funcType)(int*, int*); // 定义类型别名
+
 void testFuncConstParams(const int arr[], int size) {
 	// const 修饰表示了只读不可更改其数据
 	// arr[0] += 10; // 使用 const修饰的参数，使用的是常量地址，不能修改其值，这个和其他java 或者 ts语言就不一样了，
@@ -109,6 +114,14 @@ void testFuncParamsToFunc(int (*func)(int*, int*))
 	func(&id, &id01);
 	(*func)(&id, &id01); // 两种方式的指针函数调用都是允许的
 }
+// 将参数设置为函数指针类型
+void testFuncParamsToFunc02(funcType func)
+{
+	int id = 0;
+	int id01 = 0;
+	func(&id, &id01);
+	(*func)(&id, &id01); // 两种方式的指针函数调用都是允许的
+}
 
 void testFuncParamsToStruct01(const FuncStruct funcStruct, FuncStruct outfs) // 克隆了一份传入的参数的数据到 funcStruct中，会增加一定的时间和空间成本
 {
@@ -120,10 +133,7 @@ void testFuncParamsToStruct01(const FuncStruct funcStruct, FuncStruct outfs) // 
 
 
 
-/// <summary>
-///  定义复杂的函数类型
-/// </summary>
-typedef const int* (*funcType)(int*, int*); // 定义类型别名
+
 int* testFuncArrStartPointerToEndPointer01(int* start, int* end) {
 	int total = 0;
 	int* pointer = start;

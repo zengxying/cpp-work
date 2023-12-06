@@ -181,7 +181,7 @@ void testClassFunc() {
 	Stock& stock05 = stock;
 	cout << "测试引用赋值修改 over!!!"<< "   &stock05:" << &stock05 << "	&stock02:" << &stock02 << "		&stock:" << &stock << endl;
 	stock05.show01();
-	stock05 = stock02; // 把stock02的值赋值给了 stock，因为stock05是stock的引用所以他们的地址和值是一致的，最终他们的name属性的值都是 但是
+	stock05 = stock02;
 	stock05.show01();
 	stock.show01();
 	cout << "测试引用赋值修改 over!!!"<< "   &stock05:" << &stock05 << "	&stock02:" << &stock02 << "		&stock:" << &stock << endl;

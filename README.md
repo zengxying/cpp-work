@@ -210,7 +210,9 @@ std::cout << rref << '\n';// display 6.0
 std::cout << jref << \n';// display 48.5;
 ```
 
-#### 返回值为引用的好处
+#### 函数
+
+##### 返回值为引用的好处
 
 如果accumulate()返回一个结构，而不是指向结构的引用，将把整个结构复制到一个临时位置，再将这个拷贝复制给dup。但在返回值为引用时，将直接把team复制到dup，其效率更高。
 
@@ -231,10 +233,23 @@ const free_throws & clone2 (free_throws & ft)
 
 
 
-#### 函数模板
+#### 
+
+##### 函数模板
 
 //template <class AnyType01> // 函数模板，用于参数的自动分配类型，可以传入多类型的参数提供同一种逻辑
 template <typename AnyType> // 函数模板，用于参数的自动分配类型，可以传入多类型的参数提供同一种逻辑
+
+
+
+##### 定义复杂的函数类型
+
+```c++
+/// <summary>
+///  定义复杂的函数类型
+/// </summary>
+typedef const int* (*funcType)(int*, int*); // 定义类型别名
+```
 
 
 
@@ -416,3 +431,317 @@ constexpr int e = p.dist(); // OK，e的值在编译时就被计算为25
 ##### 关键字volatile
 
 表明，即使程序代码没有对内存单元进行修改，其值也可能发生变化。听起来似乎很神秘，实际上并非如此。例如，可以将一个指针指向某个硬件位置，其中包含了来自串行端口的时间或信息。在这种情况下，硬件（而不是程序）可能修改其中的内容。或者两个程序可能互相影响，共享数据。该关键字的作用是为了改善编译器的优化能力。例如，假设编译器发现，程序在几条语句中两次使用了某个变量的值，则编译器可能不是让程序查找这个值两次，而是将这个值缓存到寄存器中。这种优化假设变量的值在这两次使用之间不会变化。如果不将变量声明为volatile，则编译器将进行这种优化；将变量声明为volatile，相当于告诉编译器，不要进行这种优化。
+
+
+
+
+
+注意：
+在程序结束时，由new分配的内存通常都将被释放，不过情况也并不总是这样。例如，在不那么健壮的操作系统中，在某些情况下，请求大型内存块将导致该代码块在程序结束不会被自动释放。最佳的做法是，使用delete来释放new分配的内存。
+
+
+
+##### new  
+
+通常，new负责在堆（heap）中找到一个足以能够满足要求的内存块。new运算符还有另一种变体，被称为定位（placement）new运算符，它让您能够指定要使用的位置。程序员可能使用这种特性来设置其内存管理规程、处理需要通过特定地址进行访问的硬件或在特定位置创建对象。
+要使用定位new特性，首先需要包含头文件new，它提供了这种版本的new运算符的原型；然后将new运算符用于提供了所需地址的参数。除需要指定参数外，句法与常规new运算符相同。具体地说，使用定位new运算符时，变量后面可以有方括号，也可以没有。下面的代码段演示了new运算符的4种用法：
+
+```c++
+double* p01, *p02, * p03, * p04; // 一行声明多个同类型变量， 如果是地址就需要添加地址标识，否则就是声明的double类型的数据
+
+p01 = new double[MAX_LEN];
+p02 = new (buff) double[MAX_LEN];
+
+for (int i = 0; i < MAX_LEN; i++)
+{
+	p01[i] = p02[i] = 1000 + 20.0 + 0.1 * i;
+}
+
+cout << "Memory address: heap-->" << p01 << "		static-->" << (void*)buff << endl;
+
+for (int i = 0; i < MAX_LEN; i++)
+{
+	cout << "p01:" << "		value-->" << p01[i] << "	address-->" << &p01[i] << "		";
+	cout << "p02:" << "		value-->" << p02[i] << "	address-->" << &p02[i] << endl;
+}
+
+delete[] p01;
+cout << "=========================================delet p01 address=================================" << endl;
+p03 = new double[MAX_LEN];
+p04 = new (buff) double[MAX_LEN];
+
+for (int i = 0; i < MAX_LEN; i++)
+{
+	p03[i] = p04[i] = 1000 + 40.0 + 0.1 * i;
+}
+for (int i = 0; i < MAX_LEN; i++)
+{
+	cout << "p03:" << "		value-->" << p03[i] << "	address-->" << &p03[i] << "		";
+	cout << "p04:" << "		value-->" << p04[i] << "	address-->" << &p04[i] << "		";
+	cout << "p02:" << "		value-->" << p02[i] << "	address-->" << &p02[i] << endl;
+}
+
+delete[] p03;
+cout << "=========================================delet p03 address=================================" << endl;
+p01 = new double[MAX_LEN];
+p02 = new (buff + MAX_LEN * sizeof(double)) double[MAX_LEN];
+for (int i = 0; i < MAX_LEN; i++)
+{
+	p01[i] = p02[i] = 1000 + 60.0 + 0.1 * i;
+}
+for (int i = 0; i < MAX_LEN; i++)
+{
+	cout << "p01:" << "		value-->" << p01[i] << "	address-->" << &p01[i] << "		";
+	cout << "p04:" << "		value-->" << p04[i] << "	address-->" << &p04[i] << "		";
+	cout << "p02:" << "		value-->" << p02[i] << "	address-->" << &p02[i] << endl;
+}
+delete[] p01;
+delete[] buff;
+//operatorMemoryAddress  运行结果
+//address: heap-->00000239395AFDE0         static-->00007FF732D37740
+//p01:  value-- > 1020.000000     address-- > 00000239395AFDE0              p02 : value-- > 1020.000000    address-- > 00007FF732D37740
+//p01 : value-- > 1020.100000     address-- > 00000239395AFDE8              p02 : value-- > 1020.100000    address-- > 00007FF732D37748
+//p01 : value-- > 1020.200000     address-- > 00000239395AFDF0              p02 : value-- > 1020.200000    address-- > 00007FF732D37750
+//p01 : value-- > 1020.300000     address-- > 00000239395AFDF8              p02 : value-- > 1020.300000    address-- > 00007FF732D37758
+//p01 : value-- > 1020.400000     address-- > 00000239395AFE00              p02 : value-- > 1020.400000    address-- > 00007FF732D37760
+//======================================== = delet p01 address================================ =
+//p03:  value-- > 1040.000000     address-- > 00000239395AFAD0              p04 : value-- > 1040.000000    address-- > 00007FF732D37740               p02 : value-- > 1040.000000     address-- > 00007FF732D37740
+//p03 : value-- > 1040.100000     address-- > 00000239395AFAD8              p04 : value-- > 1040.100000    address-- > 00007FF732D37748               p02 : value-- > 1040.100000     address-- > 00007FF732D37748
+//p03 : value-- > 1040.200000     address-- > 00000239395AFAE0              p04 : value-- > 1040.200000    address-- > 00007FF732D37750               p02 : value-- > 1040.200000     address-- > 00007FF732D37750
+//p03 : value-- > 1040.300000     address-- > 00000239395AFAE8              p04 : value-- > 1040.300000    address-- > 00007FF732D37758               p02 : value-- > 1040.300000     address-- > 00007FF732D37758
+//p03 : value-- > 1040.400000     address-- > 00000239395AFAF0              p04 : value-- > 1040.400000    address-- > 00007FF732D37760               p02 : value-- > 1040.400000     address-- > 00007FF732D37760
+//======================================== = delet p03 address================================ =
+//p01:  value-- > 1060.000000     address-- > 00000239395AFFA0              p04 : value-- > 1040.000000    address-- > 00007FF732D37740               p02 : value-- > 1060.000000     address-- > 00007FF732D37768
+//p01 : value-- > 1060.100000     address-- > 00000239395AFFA8              p04 : value-- > 1040.100000    address-- > 00007FF732D37748               p02 : value-- > 1060.100000     address-- > 00007FF732D37770
+//p01 : value-- > 1060.200000     address-- > 00000239395AFFB0              p04 : value-- > 1040.200000    address-- > 00007FF732D37750               p02 : value-- > 1060.200000     address-- > 00007FF732D37778
+//p01 : value-- > 1060.300000     address-- > 00000239395AFFB8              p04 : value-- > 1040.300000    address-- > 00007FF732D37758               p02 : value-- > 1060.300000     address-- > 00007FF732D37780
+//p01 : value-- > 1060.400000     address-- > 00000239395AFFC0              p04 : value-- > 1040.400000    address-- > 00007FF732D37760               p02 : value-- > 1060.400000     address-- > 00007FF732D37788
+//---------------------- - over--------------------------
+```
+
+
+
+#### 命名空间
+
+
+
+当随着项目的增大，名称相互冲突的可能性也将增加。使用多个厂商的类库时，可能导致名称冲突。例如，两个库可能都定义了名为List、Tree和Node的类，但定义的方式不兼容。用户可能希望使用一个库的List类，而使用另一个库的Tree类。这种冲突被称为名称空间问题。
+
+
+
+第一个需要知道的术语是声明区域（declaration region）。声明区域是可以在其中进行声明的区域。例如，可以在函数外面声明全局变量，对于这种变量，其声明区域为其声明所在的文件。对于在函数中声明的变量，其声明区域为其声明所在的代码块。
+第二个需要知道的术语是潜在作用域（potential scope）。变量的潜在作用域从声明点开始，到其声明区域的结尾。因此潜在作用域比声明区域小，这是由于变量必须定义后才能使用。
+然而，变量并非在其潜在作用域内的任何位置都是可见的。
+
+```c++
+namespace  HiSpace {
+	int id;
+	char* name;
+	void test(int id) {
+		cout << "测试命名空间" << id << endl;
+	}
+}
+
+void testNameSpace() {
+	cout << "test name testNameSpace" << endl;
+	using HiSpace::id;
+	using HiSpace::test;
+	id = 500;
+	//int id = 300; // 编译不通过，这种方式能够很好的防止重复使用变量名导致的问题
+	cout << id << endl;
+	test(0);
+}
+
+void testNameSpace01() {
+	cout << "test name testNameSpace01" << endl;
+	using namespace HiSpace;
+	id = 500;
+	int id = 300; // 编译通过，下方使用的id都是局部变量声明的那个id
+	cout << id << endl;
+	test(1);
+}
+```
+
+[假设名称空间和声明区域定义了相同的名称。如果试图使用using声明将名称空间的名称导入该声明区域，则这两个名称会发生冲突，从而出错。如果使用using编译指令将该名称空间的名称导入该声明区域，则局部版本将隐藏名称空间版本。]: 
+
+
+
+##### 命名空间的一些使用规范
+
+1. 随着程序员逐渐熟悉名称空间，将出现统一的编程理念。下面是当前的一些指导原则。
+
+2. 使用在已命名的名称空间中声明的变量，而不是使用外部全局变量。
+
+3. 使用在已命名的名称空间中声明的变量，而不是使用静态全局变量。
+
+4. 如果开发了一个函数库或类库，将其放在一个名称空间中。事实上，C++当前提倡将标准函数库放在名称空间std中，这种做法扩展到了来自C语言中的函数。例如，头文件math.h是与C语言兼容的，没有使用名称空间，但C++头文件cmath应将各种数学库函数放在名称空间std中。实际上，并非所有的编译器都完成了这种过渡。
+
+5. 仅将编译指令using作为一种将旧代码转换为使用名称空间的权宜之计。
+
+6. 不要在头文件中使用using编译指令。首先，这样做掩盖了要让哪些名称可用；另外，包含头文件的顺序可能影响程序的行为。如果非要使用编译指令using，应将其放在所有预处理器编译指令#include之后。
+
+7. **导入名称时，首选使用作用域解析运算符或using声明的方法。**
+
+8. 对于using声明，首选将其作用域设置为局部而不是全局。	
+
+   
+
+别忘了，使用名称空间的主旨是简化大型编程项目的管理工作。对于只有一个文件的简单程序，使用using编译指令并非什么大逆不道的事。
+
+
+
+#### class 
+
+不必在类声明中使用关键字private，因为这是类对象的默认访问控制：
+
+.h  文件
+
+```c++
+#ifndef CPP_H_CustomClass
+#define CPP_H_CustomClass
+
+#include <string>
+#include <iostream>
+class Stock {
+
+private:
+	std::string name;
+	double price;
+	int count;
+	void printInfo() { std::cout << "name:" << name << "	price:" << price << " count:" << count << std::endl; };
+
+public:
+	bool buy();
+	bool shop();
+	void update();
+	void show();
+    void show01() const;
+};
+
+#endif // !CPP_H_CustomClass
+
+```
+
+.cpp文件
+
+```c++
+#include <iostream>
+#include "CustomClass.h"
+
+bool Stock::buy() {
+	return true;
+}
+bool Stock::shop() {
+	return true;
+}
+void Stock::show() {}
+
+void Stock::update() {}
+void Stock::show01() const {}
+```
+
+##### const 成员函数
+
+当const修饰的不可修改的对象时，该对象只能调用const修饰的成员函数，代表了不会修改对象的成员变量的值 
+
+同样,函数定义的开头应像这样:
+
+```c ++
+void stock::show () const// promises not to change invoking object
+```
+
+以这种方式声明和定义的类函数被称为const成员函数。就像应尽可能将const引用和指针用作函数形参一样，只要类方法不修改调用对象，就应将其声明为const。从现在开始，我们将遵守这一规则。
+
+
+
+##### 类和结构
+
+​	类描述看上去很像是包含成员函数以及public和private可见性标签的结构声明。实际上，C++对结构进行了扩展，使之具有与类相同的特性。它们之间唯一的区别是，**结构的默认访问类型是public，而类为private。** **C++程序员通常使用类来实现类描述，而把结构限制为只表示纯粹的数据对象**（常被称为普通老式数据（POD，Plain Old Data）结构）。
+
+##### 析构函数
+
+如果创建的是静态存储类对象，则其析构函数将在程序结束时自动被调用。如果创建的是自动存储类对象（就像前面的示例中那样），则其析构函数将在程序执行完代码块时（该对象是在其中定义的）自动被调用。如果对象是通过new创建的，则它将驻留在栈内存或自由存储区中，当使用delete来释放内存时，其析构函数将自动被调用。最后，程序可以创建临时对象来完成特定的操作，在这种情况下，程序将在结束对该对象的使用时自动调用其析构函数。
+
+
+
+##### 类对象的赋值
+
+下面的语句表明可以将一个对象赋给同类型的另一个对象：stock2 = stock1;// object assignment
+
+与给结构赋值一样，在默认情况下，给类对象赋值时，**将把一个对象的成员复制给另一个**。在这个例子中，stock2原来的内容将被覆盖。
+注意：
+	在默认情况下，将一个对象赋给同类型的另一个对象时，C++将源对象的每个数据成员的内容复制到目标对象中相应的数据成员中。
+
+构造函数不仅仅可用于初始化新对象。例如，该程序的main( )中包含下面的语句：
+
+```c++
+stock1 = Stock("Nifty Foods", 10, 50.0);
+```
+
+stock1对象已经存在，因此这条语句不是对stock1进行初始化，而是将新值赋给它。这是通过让构造程序创建一个新的、临时的对象，然后将其内容复制给stock1来实现的。随后程序调用析构函数，以删除该临时对象
+
+```c++
+void testClassFunc() {
+    Stock stock = Stock("jiujiujiu", 0.0); // 
+    stock.buy();
+    stock.shop();
+    stock.update();
+    stock.show();
+
+    Stock stock01 = { "jiujiujiu01" };
+    const Stock stock02{ "但是" };
+    //Stock stock01;//类"Stock"不存在默认构造函数
+    // 
+    // 
+    //DefaultConstructorClass  *cls01; // no valid
+    DefaultConstructorClass  cls01;
+    DefaultConstructorClass  cls02;
+    DefaultConstructorClass* cls03 = new DefaultConstructorClass();
+    const DefaultConstructorClass cls04{};
+
+    //cls01->test();
+    cls02 = cls01; // 把cls01的成员的值赋值到cls02
+    cls02.test();
+    cls03->test();
+    cls02 = DefaultConstructorClass(); // DefaultConstructorClass()声明了一个临时对象，赋值后就被销毁了
+
+    stock02.show01();
+    //stock02.show(); // const 修饰的对象只能调用const修饰的成员函数，代表该函数不会修改对象的成员的值
+
+    cout << "测试引用赋值修改" << endl;
+    Stock& stock05 = stock;
+    cout << "测试引用赋值修改 over!!!"<< "   &stock05:" << &stock05 << "	&stock02:" << &stock02 << "		&stock:" << &stock << endl;
+    stock05.show01();
+    stock05 = stock02; // 把stock02的值赋值给了 stock，因为stock05是stock的引用所以他们的地址和值是一致的，最终他们的name属性的值都是 但是
+    stock05.show01();
+    stock.show01();
+    cout << "测试引用赋值修改 over!!!"<< "   &stock05:" << &stock05 << "	&stock02:" << &stock02 << "		&stock:" << &stock << endl;
+
+
+    cout << "excute testClassFunc over!!!" << endl;
+}
+```
+
+
+
+##### 使用引用类型进行赋值操作：
+
+```c++
+ Stock& stock05 = stock;
+    cout << "测试引用赋值修改 over!!!"<< "   &stock05:" << &stock05 << "	&stock02:" << &stock02 << "		&stock:" << &stock << endl;
+    stock05.show01();
+    stock05 = stock02; // 把stock02的值赋值给了 stock，因为stock05是stock的引用所以他们的地址和值是一致的，最终他们的name属性的值都是 但是
+    stock05.show01();
+    stock.show01();
+    cout << "测试引用赋值修改 over!!!"<< "   &stock05:" << &stock05 << "	&stock02:" << &stock02 << "		&stock:" << &stock << endl;
+
+```
+
+![image-20231206181057532](D:\cpp_work\mdImg\image-20231206181057532.png)
+
+
+
+##### this
+
+每个成员函数（包括构造函数和析构函数）都有一个this指针。this指针指向调用对象。如果方法需要引用整个调用对象，则可以使用表达式 * this。在函数的括号后面使用const限定符将this限定为const，这样将不能使用this来修改对象的值。
+然而，要返回的并不是this，因为this是对象的地址，而是对象本身，即 * this（将解除引用运算符*用于指针，将得到指针指向的值）。现在，可以将 * this作为调用对象的别名来完成前面的方法定义。

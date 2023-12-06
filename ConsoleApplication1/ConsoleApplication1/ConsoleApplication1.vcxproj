@@ -129,12 +129,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleApplication1.cpp" />
+    <ClCompile Include="CustomClass.cpp" />
     <ClCompile Include="FunctionUseWay.cpp" />
+    <ClCompile Include="NewOperator.cpp" />
     <ClCompile Include="VariableScope.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomClass.h" />
     <ClInclude Include="CustomCommon.h" />
     <ClInclude Include="FunctionUseWay.h" />
+    <ClInclude Include="NewOperator.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="VariableScope.h" />

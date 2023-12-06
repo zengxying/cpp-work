@@ -24,6 +24,12 @@
     <ClCompile Include="VariableScope.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="NewOperator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomClass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -39,6 +45,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="VariableScope.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NewOperator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomClass.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
