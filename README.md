@@ -741,7 +741,37 @@ void testClassFunc() {
 
 
 
+##### const Stock* tempStock 地址使用const修饰
+
+在 `const Stock* tempStock` 中，`const` 关键字用于表示指针指向的对象是常量，即不能通过该指针修改对象的值。这种修饰常用于指示函数中参数的只读性，或者用于确保在函数中不会意外地修改传入的对象。
+
+在你的代码中，`const Stock* tempStock` 表示 `tempStock` 是一个指向 `Stock` 对象的常量指针。这意味着你不能通过 `tempStock` 指针修改指向的 `Stock` 对象的值。
+
+例如，在下面的函数中：
+
+```c++
+void someFunction(const Stock* tempStock) {
+    // 不能通过 tempStock 修改 Stock 对象的值
+    // 但可以使用 tempStock 访问 Stock 对象的成员（如果它们是 const 方法的话）
+}
+```
+
+
+
 ##### this
 
 每个成员函数（包括构造函数和析构函数）都有一个this指针。this指针指向调用对象。如果方法需要引用整个调用对象，则可以使用表达式 * this。在函数的括号后面使用const限定符将this限定为const，这样将不能使用this来修改对象的值。
 然而，要返回的并不是this，因为this是对象的地址，而是对象本身，即 * this（将解除引用运算符*用于指针，将得到指针指向的值）。现在，可以将 * this作为调用对象的别名来完成前面的方法定义。
+
+
+
+##### enum class
+
+C++11作用域内枚举的底层类型为int。另外，还提供了一种语法，可用于做出不同的选择：
+
+```c++
+// underlying type for pizza is short 
+enum class : short pizza (Small, Medium, Large, XLarge);
+```
+
+:short将底层类型指定为short。底层类型必须为整型。在C++11中，也可使用这种语法来指定常规枚举的底层类型，但如果没有指定，编译器选择的底层类型将随实现而异。

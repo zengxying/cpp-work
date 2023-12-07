@@ -68,6 +68,7 @@ void testReadFile();
 
 void testReferenceValue();
 void testClassFunc();
+void testClassArrAddress();
 int main()
 {
 	std::cout << "price:\n";
@@ -143,10 +144,38 @@ int main()
 
 
 	testClassFunc();
-
+	testClassArrAddress();
 	cout << "main function over!!!!!!!!! "  << endl; // 3
 
 	return 0;
+}
+
+void testClassArrAddress() {
+	const int maxLen = 5;
+	Stock stockArr[maxLen];
+	Stock stockArr01[maxLen] = {
+		Stock("001号",5.0,0),
+		Stock("002号",4.0,0),
+		Stock("003号",6.0,0),
+		Stock("004号",12.0,0),
+		Stock("005号",1.0,0)
+	};
+
+	//在 `const Stock* tempStock` 中，`const` 关键字用于表示指针指向的对象是常量，
+	// 即不能通过该指针修改对象的值。这种修饰常用于指示函数中参数的只读性，或者用于确保
+	// 在函数中不会意外地修改传入的对象。在你的代码中，`const Stock* tempStock` 表示 `tempStock`
+	//  是一个指向 `Stock` 对象的常量指针。这意味着你不能通过 `tempStock` 指针修改指向的 `Stock` 对象的值。
+
+
+	const Stock* tempStock = &stockArr01[0]; // 地址使用const修饰的意义 
+	//tempStock->testParams = 5.0; // no valide
+	for (int i = 1; i < maxLen; i++)
+	{
+		tempStock = &tempStock->compare(stockArr01[i]);
+	}
+
+	cout << "最大的价格是 price:" << tempStock->getPrice() << endl;
+	cout << "testClassArrAddress over!!!!!" << endl;
 }
 
 void testClassFunc() {

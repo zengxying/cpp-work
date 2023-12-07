@@ -42,3 +42,8 @@ void Stock::update() {
 
 }
 
+const Stock& Stock::compare(const Stock& other) const {
+	this->_price; // thisÊÇµØÖ·
+	return other._price > _price ? other : *this;
+}
+
