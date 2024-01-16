@@ -22,7 +22,9 @@ public:
 	void show();
 	void show01() const;
 	const Stock& compare(const Stock& other) const;
+	const Stock& add(Stock& other);
 	double getPrice() const { return _price; };
+	double setPrice(double value) { _price = value; };
 };
 
 class DefaultConstructorClass {
@@ -58,6 +60,13 @@ enum EggType02 { // 加上class就可以使用同样的值了
 	MEDIUM,
 	MAX,
 	NONE
+};
+enum class EggType03 :short { // 加上class就可以使用同样的值了，使用 :short 来限定enum的整数类型
+	MIN,
+	MEDIUM,
+	MAX,
+	NONE = 256,
+	NONE01 = 900000000000000
 };
 
 enum class ClotheType { // 严重性	代码	说明	项目	文件	行	禁止显示状态错误	C2365	“MIN” : 重定义；以前的定义是“枚举数”	ConsoleApplication1	D : \cpp_work\ConsoleApplication1\ConsoleApplication1\CustomClass.h	51

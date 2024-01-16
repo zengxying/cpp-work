@@ -1,4 +1,6 @@
 ﻿  ConsoleApplication1.cpp
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\CustomClass.h(67,2): warning C4309: “初始化”: 截断常量值
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\CustomClass.h(67,2): warning C4369: “EggType03::NONE01”: 枚举数的值“900000000000000”不能表示为“short”，值是“900000000000000”
 D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(225,16): warning C4305: “初始化”: 从“double”到“float”截断
 D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(226,21): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
 D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(257,15): warning C4305: “初始化”: 从“double”到“float”截断
@@ -11,5 +13,7 @@ D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(445,
 D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(629,19): warning C4305: “初始化”: 从“int”到“char”截断
 D:\cpp_work\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(629,21): warning C4309: “初始化”: 截断常量值
   CustomClass.cpp
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\CustomClass.h(67,2): warning C4309: “初始化”: 截断常量值
+D:\cpp_work\ConsoleApplication1\ConsoleApplication1\CustomClass.h(67,2): warning C4369: “EggType03::NONE01”: 枚举数的值“900000000000000”不能表示为“short”，值是“900000000000000”
   正在生成代码...
   ConsoleApplication1.vcxproj -> D:\cpp_work\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe

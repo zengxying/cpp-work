@@ -43,7 +43,11 @@ void Stock::update() {
 }
 
 const Stock& Stock::compare(const Stock& other) const {
-	this->_price; // this是地址
+	//this->_price; // this是地址
 	return other._price > _price ? other : *this;
+}
+const Stock& Stock::add(Stock& other) {
+	_price = _price + other.getPrice(); // this是地址
+	return *this;
 }
 

@@ -1,5 +1,20 @@
 # cpp-work
 用于学习cpp代码
+
+
+
+#### 快捷键
+
+ctrl  + d  复制选中内容复制到下一行
+
+| 设置选定内容的格式 | **Ctrl+K、Ctrl+F** [文本编辑器] | 编辑.格式化选定内容 |
+| ------------------ | ------------------------------- | ------------------- |
+|                    |                                 |                     |
+
+
+
+
+
 ## 类型 内存
 #### C++提供了大量的整型,应使用哪种类型呢?
 通常, int被设置为对目标计算机而言最为“自然”的长度。
@@ -662,6 +677,15 @@ void stock::show () const// promises not to change invoking object
 
 如果创建的是静态存储类对象，则其析构函数将在程序结束时自动被调用。如果创建的是自动存储类对象（就像前面的示例中那样），则其析构函数将在程序执行完代码块时（该对象是在其中定义的）自动被调用。如果对象是通过new创建的，则它将驻留在栈内存或自由存储区中，当使用delete来释放内存时，其析构函数将自动被调用。最后，程序可以创建临时对象来完成特定的操作，在这种情况下，程序将在结束对该对象的使用时自动调用其析构函数。
 
+```c++
+Stock::~Stock() {
+	using namespace std;
+	cout << "Stock::~Stock()" << endl;
+}
+```
+
+
+
 
 
 ##### 类对象的赋值
@@ -775,3 +799,80 @@ enum class : short pizza (Small, Medium, Large, XLarge);
 ```
 
 :short将底层类型指定为short。底层类型必须为整型。在C++11中，也可使用这种语法来指定常规枚举的底层类型，但如果没有指定，编译器选择的底层类型将随实现而异。
+
+
+
+
+
+#### 运算符重载
+
+例如，operator +( )重载+运算符，operator *( )重载*运算符。op必须是有效的C++运算符，不能虚构一个新的符号。例如，不能有operator@( )这样的函数，因为C++中没有@运算符。然而，operator 函数将重载[ ]运算符，因为[ ]是数组索引运算符。例如，假设有一个Salesperson类，并为它定义了一个operator +( )成员函数，以重载+运算符，以便能够将两个Saleperson对象的销售额相加，则如果district2、sid和sara都是Salesperson类对象，便可以编写这样的等式：
+
+```c++
+district2 = sid + sara;
+```
+
+编译器发现，操作数是Salesperson类对象，因此使用相应的运算符函数替换上述运算符：
+
+```c++
+district2 = sid.operator+ (sara);
+```
+
+示例
+
+```c++
+Time Time::sum(const Time& time) const {
+	Time sumTime = Time();
+	sumTime._minute = time._minute + _minute;
+	sumTime._hour = time._hour + _hour + sumTime._minute / 60;
+	sumTime._minute %= 60;
+	return sumTime;
+}
+
+Time Time::operator +(const Time& time) const {
+	return sum(time);
+}
+```
+
+```c++
+Time time;
+time.reset(24, 39);
+
+Time time01 = Time(1, 52);
+time.show();
+time01.show();
+Time sum = time.sum(time01);
+sum.show();
+
+Time all = sum + time + time01; // 运算符重载
+all.show();
+Time all01 = sum.operator+(time).operator+(time01); // 运算符重载
+all01.show();
+```
+
+1．重载后的运算符必须至少有一个操作数是用户定义的类型，这将防止用户为标准类型重载运算符。因此，不能将减法运算符（−）重载为计算两个double值的和，而不是它们的差。虽然这种限制将对创造性有所影响，但可以确保程序正常运行。
+2．使用运算符时不能违反运算符原来的句法规则。例如，不能将求模运算符（%）重载成使用一个操作数：
+同样，不能修改运算符的优先级。因此，如果将加号运算符重载成将两个类相加，则新的运算符与原来的加号具有相同的优先级。
+3．不能创建新运算符。例如，不能定义operator ** ( )函数来表示求幂。
+
+4．**不能重载下面的运算符。**
+sizeof：sizeof运算符。
+.：成员运算符。
+. *：成员指针运算符。
+
+::：作用域解析运算符。
+?:：条件运算符。
+typeid：一个RTTI运算符。
+const_cast：强制类型转换运算符。
+dynamic_cast：强制类型转换运算符。
+reinterpret_cast：强制类型转换运算符。
+static_cast：强制类型转换运算符。
+
+**5．表11.1中的大多数运算符都可以通过成员或非成员函数进行重载，但下面的运算符只能通过成员函数进行重载。**
+=：赋值运算符。
+( )：函数调用运算符。
+[ ]：下标运算符。
+->：通过指针访问类成员的运算符。
+
+
+
