@@ -1,6 +1,6 @@
 #ifndef CPP_H_MY_TIME
 #define CPP_H_MY_TIME
-
+#include <iostream>;
 class Time {
 private:
 	int _hour;
@@ -16,6 +16,16 @@ public:
 	void show();
 	Time operator +(const Time& time) const;
 	Time sum(const Time& time) const;
+	
+	friend std::ostream& operator << (std::ostream& os, Time& time);
+	/// <summary>
+	/// ÓÑÔªº¯Êý
+	/// </summary>
+	friend Time operator*(double mul, Time& time);
+
+	Time operator *(double mul) const;  // time * mul valid / mul * time invalid
+
+
 };
 #endif
 

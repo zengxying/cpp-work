@@ -56,3 +56,26 @@ Time Time::operator +(const Time& time) const {
 void Time::show() {
 	cout << "this.time.hour:" << _hour << "  this.time.minute:" << _minute << endl;
 }
+
+
+Time Time::operator *(double mul) const {
+	Time result;
+	result._minute = _minute * mul;
+	result._hour = _hour * mul + result._minute / 60;
+	result._minute %= 60;
+	return result;
+}
+
+Time operator*(double mul, Time& time) {
+	Time result;
+	result._minute = time._minute * mul;
+	result._hour = time._hour * mul + result._minute / 60;
+	result._minute %= 60;
+	return result;
+}
+
+
+std::ostream& operator << (std::ostream& os, Time& time) {
+	os << time._hour << " -->hour     " << time._minute << "  --> minute \n";
+	return os;
+}

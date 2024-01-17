@@ -1,3 +1,15 @@
 ﻿  main.cpp
 D:\cpp_work\Project1_chapter11\Project1_chapter11\main.cpp(1,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+D:\cpp_work\Project1_chapter11\Project1_chapter11\mytime.h(3,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+D:\cpp_work\Project1_chapter11\Project1_chapter11\main.cpp(2,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+D:\cpp_work\Project1_chapter11\Project1_chapter11\main.cpp(3,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+  mytime.cpp
+D:\cpp_work\Project1_chapter11\Project1_chapter11\mytime.cpp(1,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+D:\cpp_work\Project1_chapter11\Project1_chapter11\mytime.h(3,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+D:\cpp_work\Project1_chapter11\Project1_chapter11\mytime.cpp(2,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+D:\cpp_work\Project1_chapter11\Project1_chapter11\mytime.cpp(63,27): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+D:\cpp_work\Project1_chapter11\Project1_chapter11\mytime.cpp(64,29): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+D:\cpp_work\Project1_chapter11\Project1_chapter11\mytime.cpp(71,32): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+D:\cpp_work\Project1_chapter11\Project1_chapter11\mytime.cpp(72,34): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+  正在生成代码...
   Project1_chapter11.vcxproj -> D:\cpp_work\Project1_chapter11\x64\Debug\Project1_chapter11.exe

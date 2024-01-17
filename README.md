@@ -876,3 +876,44 @@ static_cast：强制类型转换运算符。
 
 
 
+#### 友元
+
+
+
+您知道，C++控制对类对象私有部分的访问。通常，公有类方法提供唯一的访问途径，但是有时候这种限制太严格，以致于不适合特定的编程问题。在这种情况下，C++提供了另外一种形式的访问权限：友元。友元有3种：
+
+##### 友元函数；
+
+原型中使用 （即.h 头文件）friend 修饰声明
+
+```c++
+std::ostream& operator << (std::ostream& os, Time& time) {
+	os << time._hour << " -->hour     " << time._minute << "  --> minute \n";
+	return os;
+}
+
+// 成员函数重载运算符
+Time Time::operator *(double mul) const {
+	Time result;
+	result._minute = _minute * mul;
+	result._hour = _hour * mul + result._minute / 60;
+	result._minute %= 60;
+	return result;
+}
+
+// 非成员函数实现重载运算符，由于要访问私有属性，所以该函数是友元函数
+Time operator*(double mul, Time& time) {
+	Time result;
+	result._minute = time._minute * mul;
+	result._hour = time._hour * mul + result._minute / 60;
+	result._minute %= 60;
+	return result;
+}
+```
+
+**非成员版本的重载运算符函数所需的形参数目与运算符使用的操作数数目相同；而成员版本所需的参数数目少一个，因为其中的一个操作数是被隐式地传递的调用对象。**
+
+
+
+友元类；
+友元成员函数。
