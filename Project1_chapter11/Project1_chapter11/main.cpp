@@ -24,10 +24,26 @@ int main() {
 
 	/// 让重载的函数返回了一个ostream类型的对象的引用
 	std::cout << "ceshiwenzi " << all << "end \n"; //  << "end \n" 后面再加上这句话就报错了 应该是重载的方法没有返回一个ostream对象所以不能链式访问
-
+	/*
 	std::ofstream osf;
 	osf.open("obj.txt");
 	osf << time01;  // 也是ostream类型的也算是重载了运算符
-	osf.close();
+	osf.close();*/
 
+	char cs[] = { 'a','b','\n' };
+
+	// 使用双重大括号初始化数组，指定维度
+	char csarr[][3] = { 
+		{'a','b','\n'},
+	};
+	std::cout << cs << std::endl;
+
+
+
+
+	char* csp = cs;
+	char** csparr = &csp;
+	std::cout << *cs << std::endl; //  数组第一个索引的指针 的*解 就是指针的值
+	std::cout << csp << std::endl;
+	std::cout << csparr << std::endl;
 }
