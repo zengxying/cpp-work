@@ -127,9 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ClassTyeTrans.h" />
     <ClInclude Include="mytime.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClassTypeTrans.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mytime.cpp" />
   </ItemGroup>

@@ -1,7 +1,10 @@
 #include "mytime.h";
+#include "ClassTyeTrans.h"
 #include <iostream>;
 #include <fstream>;
 int main() {
+
+	using std::cout;
 
 	Time time;
 	time.reset(24, 39);
@@ -46,4 +49,10 @@ int main() {
 	std::cout << *cs << std::endl; //  数组第一个索引的指针 的*解 就是指针的值
 	std::cout << csp << std::endl;
 	std::cout << csparr << std::endl;
+
+	ClassType::ClassTypeTrans ctt = 10; // 直接类型转换, 通过构造函数进行类型转换
+
+	cout << "ctt == operator double : " << ctt << std::endl; // 使用了 转换函数后  ctt被转换成了double类型所以就不会报错了
+
+
 }
