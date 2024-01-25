@@ -1269,10 +1269,31 @@ long gone = int (poppins);// use int conversion
 关于boost库的引入 暂时只有一种方式其他的csdn上的方案尝试了没能实现
 
 1. 去官网下载boost库 https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/
-
 2. 解压文件
 3. vs中在选择 项目-> 属性-> vc++目录 -> 包含目录 -> 填入解压的目录路径即可
 4. #include <boost/xxx>
+
+
+
+##### scoped_ptr
+
+```c++
+{
+	cout << "在main作用域中------------------------{}" << endl;
+	boost::scoped_ptr<ClassType::ClassTypeTrans> spctt(new ClassType::ClassTypeTrans(101314));
+	boost::scoped_ptr<ClassType::ClassTypeTrans> spctt01(new ClassType::ClassTypeTrans(101315));
+	boost::scoped_ptr<ClassType::ClassTypeTrans> spctt02(new ClassType::ClassTypeTrans(101316));
+	boost::scoped_ptr<ClassType::ClassTypeTrans> spctt03(new ClassType::ClassTypeTrans(101317));
+	
+	cout << "在main作用域中------------------------{} over" << endl; // 离开作用域就会销毁scoped_ptr 从下往上销毁，应该是用到了队列的先进后出
+}
+```
+
+
+
+
+
+##### shared_ptr
 
 ![image-20240124170528977](D:\cpp_work\mdImg\image-20240124170528977.png)
 
@@ -1290,3 +1311,11 @@ ctt03.reset();
 ```
 
 ![image-20240125144722665](D:\cpp_work\mdImg\image-20240125144722665.png)
+
+
+
+
+
+##### weak_ptr
+
+![image-20240125153908491](D:\cpp_work\mdImg\image-20240125153908491.png)
