@@ -1,9 +1,6 @@
-﻿  ClassTypeTrans.cpp
-D:\cpp_work\Project1_chapter11\Project1_chapter11\ClassTypeTrans.cpp(2,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
-  main.cpp
+﻿  main.cpp
 D:\cpp_work\Project1_chapter11\Project1_chapter11\main.cpp(1,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
 D:\cpp_work\Project1_chapter11\Project1_chapter11\mytime.h(3,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
 D:\cpp_work\Project1_chapter11\Project1_chapter11\main.cpp(3,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
 D:\cpp_work\Project1_chapter11\Project1_chapter11\main.cpp(4,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
-  正在生成代码...
-D:\cpp_work\Project1_chapter11\Project1_chapter11\main.cpp : fatal  error C1090: PDB API 调用失败，错误代码“3”: D:\cpp_work\Project1_chapter11\Project1_chapter11\x64\Debug\vc143.pdb
+  Project1_chapter11.vcxproj -> D:\cpp_work\Project1_chapter11\x64\Debug\Project1_chapter11.exe
