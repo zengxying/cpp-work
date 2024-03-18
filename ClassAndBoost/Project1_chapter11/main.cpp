@@ -5,7 +5,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
-
+#include <boost/scoped_array.hpp>
 using namespace std;
 class Child;
 class Parent;
@@ -56,6 +56,13 @@ public:
 };
 
 
+/// <summary>
+/// shared_array 是一样的效果就不做测试了
+/// </summary>
+void testScopedArr() {
+	cout << "----------------------------testScopedArr------------------------------------" << endl;
+	boost::scoped_array<ClassType::ClassTypeTrans> ccts(new ClassType::ClassTypeTrans[3]);
+}
 
 /// <summary>
 /// 测试boost::shared_ptr的循环引用问题
@@ -187,4 +194,6 @@ int main() {
 
 	testBoostSharedCycleRef();
 	testWeakLock();
+	testScopedArr();
+
 }
